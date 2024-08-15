@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model user {
+  id         Int      @id
+  name       String   @db.VarChar(255)
+  role       Int      @db.Integer
+  password   String   @db.Text
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  audit      audit[]
+}
+
+model categories {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar()
+  description String   @db.Text
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  items       items[]
+}
+
+model items {
+  id          Int        @id @default(autoincrement())
+  name        String     @db.VarChar()
+  description String     @db.Text
+  quantity    Int        @db.Integer
+  category    categories @relation(fields: [category_id], references: [id])
+  category_id Int
+  imgpath     String     @db.Text
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  audit       audit[]
+}
+
+model audit {
+  id              Int      @id @default(autoincrement())
+  item            items    @relation(fields: [item_id], references: [id])
+  item_id         Int
+  user            user     @relation(fields: [user_id], references: [id])
+  user_id         Int
+  action          String   @db.VarChar()
+  quantity_before Int      @db.Integer
+  quantity_after  Int      @db.Integer
+  timestamp       DateTime @default(now())
+}
