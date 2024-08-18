@@ -1,0 +1,70 @@
+"use server"
+const { PrismaClient } = require('@prisma/client')
+import { compare } from "bcrypt";
+import { deletesession, encrypt, setsessioncookie } from "../lib/session";
+// import { NextResponse } from "next/server";
+import { redirect } from "next/navigation";
+import { registerValidator } from "../lib/validator";
+import { hash } from "bcrypt";
+
+const prisma = new PrismaClient()
+
+export async function signup(state, formData) {
+    const id = parseInt(formData.get('id'))
+    // Validate form fields
+    const validatedFields = registerValidator.safeParse({
+        id: id,
+        name: formData.get('name'),
+        password: formData.get('password'),
+    })
+
+    // If any form fields are invalid, return early
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+        }
+    }
+    const password = await hash(formData.get('password'), 10)
+    const create = await prisma.user.create({
+        data: {
+            id: id,
+            name: formData.get('name'),
+            password: password,
+            role: 2
+        }
+    })
+    redirect(`/login`)
+}
+
+export async function signin(state, formData) {
+    const id = parseInt(formData.get('id'))
+    const enter = await prisma.user.findUnique({
+        where: {
+            id: id
+        }
+    })
+    console.log(enter.password);
+    const istrue = await compare(formData.get('password'), enter.password)
+    if (!istrue) {
+        return {
+            errors: 'ID or Password incorrect'
+        }
+    }
+    // create session
+    const expat = new Date(Date.now() + 24 * 60 * 60 * 1000) // expired 1d later
+    const usertoken = await encrypt({
+        id: enter.id,
+        expat: expat
+    })
+    console.log(usertoken);
+    await setsessioncookie(usertoken, expat)
+    // NextResponse.redirect(new URL('/dashboard', req.nextUrl))
+    redirect('/dashboard')
+}
+
+export async function logout(req) {
+    console.log('logout');
+    console.log(req);
+    await deletesession()
+    redirect('/login')
+}

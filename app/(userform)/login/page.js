@@ -1,7 +1,7 @@
 "use client"
 import { PrismaClient } from "@prisma/client";
 import Image from "next/image";
-import { signin } from "../auth/login";
+import { signin } from "../../auth/user";
 import {useActionState} from 'react'
 
 const prisma = new PrismaClient

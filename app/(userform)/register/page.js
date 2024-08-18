@@ -1,6 +1,6 @@
 "use client"
+import { signup } from "@/app/auth/user";
 import Image from "next/image";
-import { signup } from "../auth/register";
 import { useActionState } from "react";
 
 
