@@ -1,7 +1,7 @@
 // additional root layout
-// app can work without this file,
-// but redirect function wil not work if the function that called redirect has different root layout
-// it need root layout that encapsule all route
+// actualy this app can work fine without this file,
+// but redirect not work if the redirect target has different root layout
+// it need this root layout
 
 export default function RootLayout({ children }) {
     return (
