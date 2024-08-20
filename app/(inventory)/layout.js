@@ -19,21 +19,17 @@ export default function inventoryLayout({ children }) {
   ]
   return (
     <>
-      <html lang="en">
-        <body className={inter.className}>
-          <div>
-            <Sidebar profile={user[0]} />
-            <div className="relative md:ml-64">
-              <div className="h-min">
-              <Navbar data={user[0]} />
-              </div>
-              <div className="p-4 md:p-10 mx-auto w-full">
-                {children}
-              </div>
-            </div>
+      <div>
+        <Sidebar profile={user[0]} />
+        <div className="relative md:ml-64">
+          <div className="h-min">
+            <Navbar data={user[0]} />
           </div>
-        </body>
-      </html>
+          <div className="p-4 md:p-10 pb-0 md:pb-0 mx-auto w-full">
+            {children}
+          </div>
+        </div>
+      </div>
     </>
   );
 }

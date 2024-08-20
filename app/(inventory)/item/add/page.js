@@ -1,12 +1,11 @@
-import { PrismaClient } from "@prisma/client"
 import { redirect } from "next/navigation"
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from 'uuid';
 import path from "path";
 import { writeFile } from "fs/promises";
 import Img from "./img"
-
-const prisma = new PrismaClient()
+import { customModel } from "@/app/lib/prisma/customitemmodel";
+import { getactiveuser } from "@/app/lib/session";
 
 export default async function additem() {
     async function additem(data) {
@@ -25,15 +24,16 @@ export default async function additem() {
                 buffer
             );
             try {
-                const create = await prisma.items.create({
-                    data: {
-                        name: data.get('name'),
-                        description: data.get('description'),
-                        quantity: qty,
-                        category_id: category,
-                        imgpath: filename
-                    }
+                const uid = await getactiveuser();
+                const create = await customModel.items.newItem({
+                    uid: uid,
+                    name: data.get('name'),
+                    description: data.get('description'),
+                    quantity: qty,
+                    category_id: category,
+                    imgpath: filename
                 })
+                console.log(create);
             } catch (error) {
                 console.log(error);
             }
@@ -42,7 +42,7 @@ export default async function additem() {
         }
         redirect('/item')
     }
-    const categories = await prisma.categories.findMany()
+    const categories = await customModel.categories.findMany()
     return (
         <>
             <div className="mb-3 pt-0 grid grid-cols-2 gap-4">

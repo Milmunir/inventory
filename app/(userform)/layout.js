@@ -10,11 +10,7 @@ export const metadata = {
 export default function userLayout({ children }) {
   return (
     <>
-      <html lang="en">
-        <body className={inter.className}>
-          {children}
-          </body>
-      </html>
+      {children}
     </>
   );
 }

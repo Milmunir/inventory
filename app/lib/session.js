@@ -33,6 +33,13 @@ export async function setsessioncookie(session, expat) {
         sameSite: 'lax',
         path: '/',
     })
+    
+}
+
+export async function getactiveuser() {
+    const session = cookies().get('session').value
+    const payload = await decrypt(session)
+    return payload.id
 }
 
 export async function updatesessioncookie() {
@@ -43,7 +50,6 @@ export async function updatesessioncookie() {
     }
     const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
     try {
-        
         cookies().set('session', session, {
             httpOnly: true,
             secure: true,
