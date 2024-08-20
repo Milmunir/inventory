@@ -43,7 +43,11 @@ export async function signin(state, formData) {
             id: id
         }
     })
-    console.log(enter.password);
+    if (!enter) {
+        return {
+            errors: 'ID or Password incorrect'
+        }
+    }
     const istrue = await compare(formData.get('password'), enter.password)
     if (!istrue) {
         return {

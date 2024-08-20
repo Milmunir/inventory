@@ -10,7 +10,6 @@ export async function encrypt(payload) {
     return new SignJWT(payload)
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
-        .setExpirationTime('1d')
         .sign(encodedKey)
 }
 
@@ -46,6 +45,7 @@ export async function updatesessioncookie() {
     const session = cookies().get('session').value
     const payload = await decrypt(session)
     if (!session || !payload) {
+        console.log('user not found');
         redirect('/login')
     }
     const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
@@ -57,10 +57,10 @@ export async function updatesessioncookie() {
             sameSite: 'lax',
             path: '/',
         })
-        return true
+        console.log('session refresed');
+        return expires
     } catch (error) {
         console.log(error);
-        
     }
 }
 
