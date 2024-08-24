@@ -41,18 +41,19 @@ model items {
   category    categories @relation(fields: [category_id], references: [id])
   category_id Int
   imgpath     String     @db.Text
-  alertqty    Int        @db.Integer @default(1000)
+  alertqty    Int        @default(1000) @db.Integer
   created_at  DateTime   @default(now())
   updated_at  DateTime   @updatedAt
 }
 
 model audit {
   id        Int      @id @default(autoincrement())
-  type      String  @db.Text
+  type      String   @db.Text
   entity_id Int?
   user      user     @relation(fields: [user_id], references: [id])
   user_id   Int
   action    String   @db.VarChar()
+  part      String?  @db.Text
   before    String?  @db.Text
   after     String?  @db.Text
   timestamp DateTime @default(now())

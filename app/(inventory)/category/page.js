@@ -31,9 +31,11 @@ export default async function Inventory() {
                                 <div className="table-cell border-b border-slate-100 dark:border-slate-700 p-4 pl-4 w-48 text-slate-500 dark:text-slate-400">{key.name}</div>
                                 <div className="table-cell border-b border-slate-100 dark:border-slate-700 p-4 pr-8 w-auto text-slate-500 dark:text-slate-400">{key.description}</div>
                                 <div className="table-cell border-b border-slate-100 dark:border-slate-700 pl-2 text-slate-500 dark:text-slate-400 align-middle w-12 p-0">
-                                    <button className="bg-amber-500 text-white active:bg-amber-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" type="button">
-                                        <i className="fas fa-pen text-gray-200"></i>
-                                    </button>
+                                    <a href={`/category/${key.id}/edit`}>
+                                        <button className="bg-amber-500 text-white active:bg-amber-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" type="button">
+                                            <i className="fas fa-pen text-gray-200"></i>
+                                        </button>
+                                    </a>
                                 </div>
                                 <div className="table-cell border-b border-slate-100 dark:border-slate-700 px-2 text-slate-500 dark:text-slate-400 align-middle w-12 p-0">
                                     <button className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" type="button">

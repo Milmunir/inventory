@@ -85,7 +85,7 @@ export default function Sidebar({profile}) {
                                 </a>
                             </li>
                             <li className="items-center">
-                                <a className="text-gray-900 dark:text-gray-100 hover:text-pink-600 text-xs uppercase py-3 font-bold block" href="#/dashboard">
+                                <a className="text-gray-900 dark:text-gray-100 hover:text-pink-600 text-xs uppercase py-3 font-bold block" href="/report">
                                     <i className="text-center fas fa-clipboard mr-2 text-sm w-6"></i>
                                     Report
                                 </a>

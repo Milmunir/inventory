@@ -23,7 +23,7 @@ const customModel = new PrismaClient().$extends({
                         entity_id: created.id,
                         user_id: uid,
                         action: 'create',
-                        after: created.quantity,
+                        after: ''+created.quantity,
                         timestamp: created.created_at
                     }
                 })
@@ -45,6 +45,7 @@ const customModel = new PrismaClient().$extends({
                             entity_id: id,
                             user_id: uid,
                             action: 'update',
+                            part: 'name',
                             before: before.name,
                             after: name,
                             timestamp: changed.updated_at
@@ -59,6 +60,7 @@ const customModel = new PrismaClient().$extends({
                             entity_id: id,
                             user_id: uid,
                             action: 'update',
+                            part: 'description',
                             before: before.description,
                             after: description,
                             timestamp: changed.updated_at
@@ -73,8 +75,9 @@ const customModel = new PrismaClient().$extends({
                             entity_id: id,
                             user_id: uid,
                             action: 'update',
-                            before: before.quantity,
-                            after: quantity,
+                            part: 'quantity',
+                            before: ''+before.quantity,
+                            after: ''+quantity,
                             timestamp: changed.updated_at
                         }
                     })
@@ -87,8 +90,9 @@ const customModel = new PrismaClient().$extends({
                             entity_id: id,
                             user_id: uid,
                             action: 'update',
-                            before: before.category_id,
-                            after: category_id,
+                            part: 'category',
+                            before: ''+before.category_id,
+                            after: ''+category_id,
                             timestamp: changed.updated_at
                         }
                     })
@@ -101,6 +105,7 @@ const customModel = new PrismaClient().$extends({
                             entity_id: id,
                             user_id: uid,
                             action: 'update',
+                            part: 'imgpath',
                             before: before.imgpath,
                             after: imgpath,
                             timestamp: changed.updated_at
@@ -122,8 +127,9 @@ const customModel = new PrismaClient().$extends({
                         entity_id: id,
                         user_id: uid,
                         action: 'update',
-                        before: before,
-                        after: changed.quantity,
+                        part: 'quantity',
+                        before: ''+before,
+                        after: ''+changed.quantity,
                         timestamp: changed.updated_at
                     }
                 })
@@ -142,8 +148,9 @@ const customModel = new PrismaClient().$extends({
                         entity_id: id,
                         user_id: uid,
                         action: 'update',
-                        before: before,
-                        after: changed.quantity,
+                        part: 'quantity',
+                        before: ''+before,
+                        after: ''+changed.quantity,
                         timestamp: changed.updated_at
                     }
                 })
@@ -162,8 +169,9 @@ const customModel = new PrismaClient().$extends({
                         entity_id: id,
                         user_id: uid,
                         action: 'update',
-                        before: before,
-                        after: changed.quantity,
+                        part: 'quantity',
+                        before: ''+before,
+                        after: ''+changed.quantity,
                         timestamp: changed.updated_at
                     }
                 })
@@ -179,7 +187,7 @@ const customModel = new PrismaClient().$extends({
                         entity_id: id,
                         user_id: uid,
                         action: 'delete',
-                        before: before,
+                        before: ''+before,
                         timestamp: changed.updated_at
                     }
                 })
@@ -200,7 +208,7 @@ const customModel = new PrismaClient().$extends({
                         entity_id: created.id,
                         user_id: uid,
                         action: 'create',
-                        before: `name: ${name} -- description: ${description}`,
+                        after: name,
                         timestamp: created.created_at
                     }
                 })
@@ -214,17 +222,36 @@ const customModel = new PrismaClient().$extends({
                         description
                     }
                 })
-                await customModel.audit.create({
-                    data: {
-                        type: 'category',
-                        entity_id: id,
-                        user_id: uid,
-                        action: 'update',
-                        before: `name: ${before.name} -- description: ${before.description}`,
-                        after: `name: ${updated.name} -- description: ${updated.description}`,
-                        timestamp: updated.created_at
-                    }
-                })
+                if (before.name != name) {
+                    console.log('name');
+                    await customModel.audit.create({
+                        data: {
+                            type: 'category',
+                            entity_id: id,
+                            user_id: uid,
+                            action: 'update',
+                            part: 'name',
+                            before: before.name,
+                            after: name,
+                            timestamp: updated.updated_at
+                        }
+                    })
+                }
+                if (before.description != description) {
+                    console.log('description');
+                    await customModel.audit.create({
+                        data: {
+                            type: 'category',
+                            entity_id: id,
+                            user_id: uid,
+                            action: 'update',
+                            part: 'description',
+                            before: before.description,
+                            after: description,
+                            timestamp: updated.updated_at
+                        }
+                    })
+                }
                 return updated
             },
             async remove({ uid, id }) {
@@ -237,7 +264,7 @@ const customModel = new PrismaClient().$extends({
                         entity_id: id,
                         user_id: uid,
                         action: 'delete',
-                        before: `name: ${updated.name} -- description: ${updated.description}`,
+                        before: name,
                         timestamp: updated.created_at
                     }
                 })

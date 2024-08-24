@@ -9,14 +9,7 @@ export default async function Audit() {
     const log = await prisma.audit.findMany({
         orderBy: [
             { timestamp: 'desc' }
-        ],
-        include: {
-            item: {
-                select: {
-                    name: true
-                }
-            }
-        }
+        ]
     })
     const item = await prisma.items.findMany({
         select: {
@@ -25,6 +18,15 @@ export default async function Audit() {
         },
         orderBy:[
             {id: 'asc'}
+        ]
+    })
+    const categories = await prisma.categories.findMany({
+        select: {
+            id: true,
+            name: true
+        },
+        orderBy:[
+            {name: 'asc'}
         ]
     })
     const users = await prisma.user.findMany({
@@ -39,7 +41,7 @@ export default async function Audit() {
     
     return (
         <>
-            <Filter user={users} item={item} log={log}/>
+            <Filter user={users} item={item} log={log} cat={categories}/>
         </>
     )
 }
