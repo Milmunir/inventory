@@ -1,6 +1,7 @@
-import { customModel } from "@/app/lib/prisma/customitemmodel";
+import { customModel } from "@/app/lib/prisma/customodel";
 import { getactiveuser } from "@/app/lib/session";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import Image from "next/image";
 
 export default async function Itemdetail({ params }) {
@@ -51,9 +52,35 @@ export default async function Itemdetail({ params }) {
         })
         revalidatePath(`/item/${params.id}`)
     }
+    async function remove(formdata) {
+        "use server"
+        await customModel.items.remove({
+            uid: uid,
+            id: id,
+            before: data.quantity
+        })
+        redirect('/item')
+    }
     return (
         <>
             <div className="">
+                <div className="flex w-full justify-between">
+                    <div>
+                        {data.name} DETAIL
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                        <a href={`/item/${id}/edit`}>
+                            <button className="bg-amber-500 text-white active:bg-amber-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" type="button">
+                                <i className="fas fa-pen text-gray-200"></i>
+                            </button>
+                        </a>
+                        <form action={remove}>
+                            <button type='submit' className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150">
+                                <i className="fas fa-trash text-gray-200"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
                 <div className="grid grid-cols-2 grid-rows-[min-content min-content] gap-4 w-full">
                     <div className="lg:row-span-2 row-span-1 col-span-1">
                         <div className="relative flex w-full h-full">

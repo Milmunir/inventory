@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import path from "path";
 import { writeFile } from "fs/promises";
 import Img from "./img"
-import { customModel } from "@/app/lib/prisma/customitemmodel";
+import { customModel } from "@/app/lib/prisma/customodel";
 import { getactiveuser } from "@/app/lib/session";
 
 export default async function additem() {
@@ -45,10 +45,10 @@ export default async function additem() {
     const categories = await customModel.categories.findMany()
     return (
         <>
-            <div className="mb-3 pt-0 grid grid-cols-2 gap-4">
+            <div className="mb-3 pt-0 grid grid-cols-[1fr_25%] gap-4">
                 <form action={additem} id="item-form">
                     <label htmlFor="name">Name</label>
-                    <input id="name" name="name" type="text" placeholder="name" className="px-3 py-3 placeholder-gray-600 text-blueGray-600 text-gray-800 bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full my-4" />
+                    <input id="name" name="name" type="text" placeholder="name" className="px-3 py-3 placeholder-gray-600 text-blueGray-600 text-gray-800 bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full my-4" required/>
                     <label htmlFor="quantity">Quantity</label>
                     <input id="quantity" name="quantity" type="number" placeholder="quantity" className="px-3 py-3 placeholder-gray-600 text-gray-800 bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full my-4" min={0} />
                     <label htmlFor="category_id">Category</label>

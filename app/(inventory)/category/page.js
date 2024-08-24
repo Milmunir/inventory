@@ -9,7 +9,7 @@ export default async function Inventory() {
             <div>
                 <div className="flex w-full justify-end">
                     <a href="/category/add">
-                        <button className="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                        <button className="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mb-1 ease-linear transition-all duration-150" type="button">
                             Add
                         </button>
                     </a>

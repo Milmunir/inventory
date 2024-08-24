@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "audit" ALTER COLUMN "after" SET DATA TYPE TEXT,
+ALTER COLUMN "before" SET DATA TYPE TEXT;

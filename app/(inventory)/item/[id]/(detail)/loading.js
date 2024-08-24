@@ -18,26 +18,26 @@ export default function Loading() {
                     <div className="lg:row-span-1 col-span-1 break-words">
                         <div className="m-2 ml-0 mt-0">
                             <p className="uppercase font-bold text-xs">Name</p>
-                            <div class="flex gap-2">
-                                <div class="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
-                                <div class="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
-                                <div class="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
+                            <div className="flex gap-2">
+                                <div className="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
+                                <div className="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
+                                <div className="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
                             </div>
                         </div>
                         <div className="m-2 ml-0">
                             <p className="uppercase font-bold text-xs">Description</p>
-                            <div class="flex gap-2">
-                                <div class="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
-                                <div class="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
-                                <div class="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
+                            <div className="flex gap-2">
+                                <div className="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
+                                <div className="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
+                                <div className="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
                             </div>
                         </div>
                         <div className="m-2 ml-0">
                             <p className="uppercase font-bold text-xs">Quantity</p>
-                            <div class="flex gap-2">
-                                <div class="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
-                                <div class="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
-                                <div class="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
+                            <div className="flex gap-2">
+                                <div className="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
+                                <div className="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
+                                <div className="w-5 h-5 rounded-full animate-pulse bg-gray-400"></div>
                             </div>
                         </div>
                     </div>

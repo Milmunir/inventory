@@ -25,7 +25,7 @@ export default function inventoryLayout({ children }) {
           <div className="h-min">
             <Navbar data={user[0]} />
           </div>
-          <div className="p-4 md:p-10 pb-0 md:pb-0 mx-auto w-full">
+          <div className="p-4 md:p-10 mx-auto w-full">
             {children}
           </div>
         </div>

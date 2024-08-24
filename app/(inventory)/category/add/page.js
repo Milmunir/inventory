@@ -1,18 +1,16 @@
-import { PrismaClient } from "@prisma/client"
+import { customModel } from "@/app/lib/prisma/customodel";
+import { getactiveuser } from "@/app/lib/session";
 import { redirect } from "next/navigation"
 
-const prisma = new PrismaClient()
-
-export default function Addcategory() {
-    async function additem(data){
+export default async function Addcategory() {
+    const uid = await getactiveuser()
+    async function additem(data) {
         "use server"
-        const create = await prisma.categories.create({
-            data: {
-                name: data.get('name'),
-                description: data.get('description')
-            }
+        const create = await customModel.categories.newCat({
+            uid: uid,
+            name: data.get('name'),
+            description: data.get('description')
         })
-        console.log(create);
         redirect('/category')
     }
     return (
