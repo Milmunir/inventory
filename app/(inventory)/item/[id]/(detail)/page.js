@@ -57,7 +57,7 @@ export default async function Itemdetail({ params }) {
         await customModel.items.remove({
             uid: uid,
             id: id,
-            before: data.quantity
+            before: data
         })
         redirect('/item')
     }

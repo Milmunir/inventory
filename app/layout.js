@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
             <head>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.0/css/all.min.css" />
             </head>
-            <html>
+            <html data-bs-theme-mode='light'>
                 <body>
                     {children}
                 </body>

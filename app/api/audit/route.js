@@ -4,7 +4,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient
 export async function POST(request) {
     const data = await request.json();
-    const sort = JSON.parse('{"' + data.sort + '": "asc"}')
+    const sort = JSON.parse('{"' + data.sort + '": ""}')
+    sort[data.sort] = data.asc? "asc" : "desc"
     const userId = parseInt(data.user)
     const id = parseInt(data.id)
     const log = await prisma.audit.findMany({
@@ -23,6 +24,5 @@ export async function POST(request) {
             }
         }
     })
-    console.log(log);
     return NextResponse.json({log})
 }

@@ -21,6 +21,9 @@ export default function Filter(data) {
     })
     const typeselect = useRef(null)
     async function setfilter(key, value) {
+        if (key==='sort'&&ref.current.sort === value) {
+            ref.current.asc = !ref.current.asc
+        }
         ref.current[key] = value
         if (ref.current.type == 'category') {
             typeselect.current = (
@@ -89,7 +92,6 @@ export default function Filter(data) {
                     To
                     <input type="date" className="m-2 font-semibold inline-block py-1 px-2 rounded text-gray-600 dark:text-gray-200 bg-gray-200 dark:bg-gray-600" placeholder="To" name="to" onChange={(e) => setfilter('to', e.target.value)}></input>
                 </div>
-                <button className="m-2 mr-0 font-semibold inline-block py-1 px-2 rounded text-gray-600 dark:text-gray-200 bg-gray-200 dark:bg-gray-600" type="submit">Filter</button>
             </div>
             <div className="py-2 flex w-full justify-center">
                 <nav className="block">
@@ -127,14 +129,14 @@ export default function Filter(data) {
             <div className="table border-collapse table-auto w-full text-sm">
                 <div className="table-header-group">
                     <div className="table-row">
-                        <div className="cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'timestamp')}>Time<i class="fas fa-chevron-up"/></div>
-                        <div className="cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'user_id')}>User</div>
-                        <div className="cursor-pointer table-cell border-b dark:border-slate-600 font-medium py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'type')}>Type</div>
-                        <div className="cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 pb-3 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'entity_id')}>Id</div>
-                        <div className="cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 pb-3 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'action')}>Action</div>
-                        <div className="cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'part')}>Part</div>
-                        <div className="cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 pb-3 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'before')}>Before</div>
-                        <div className="cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'after')}>After</div>
+                        <div className="w-0 cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'timestamp')}>Time{ref.current.sort === 'timestamp'? <i className={`fas fa-caret-${ref.current.asc? 'up' : 'down'} ml-1`}/> : null}</div>
+                        <div className="w-min cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'user_id')}>User{ref.current.sort === 'user_id'? <i className={`fas fa-caret-${ref.current.asc? 'up' : 'down'} ml-1`}/> : null}</div>
+                        <div className="w-min cursor-pointer table-cell border-b dark:border-slate-600 font-medium py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'type')}>Type{ref.current.sort === 'type'? <i className={`fas fa-caret-${ref.current.asc? 'up' : 'down'} ml-1`}/> : null}</div>
+                        <div className="w-min cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'entity_id')}>Id{ref.current.sort === 'entity_id'? <i className={`fas fa-caret-${ref.current.asc? 'up' : 'down'} ml-1`}/> : null}</div>
+                        <div className="w-min cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'action')}>Action{ref.current.sort === 'action'? <i className={`fas fa-caret-${ref.current.asc? 'up' : 'down'} ml-1`}/> : null}</div>
+                        <div className="w-min cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'part')}>Part{ref.current.sort === 'part'? <i className={`fas fa-caret-${ref.current.asc? 'up' : 'down'} ml-1`}/> : null}</div>
+                        <div className="cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'before')}>Before{ref.current.sort === 'before'? <i className={`fas fa-caret-${ref.current.asc? 'up' : 'down'} ml-1`}/> : null}</div>
+                        <div className="cursor-pointer table-cell border-b dark:border-slate-600 font-medium px-2 py-4 text-slate-400 dark:text-slate-200 text-left" onClick={() => setfilter('sort', 'after')}>After{ref.current.sort === 'after'? <i className={`fas fa-caret-${ref.current.asc? 'up' : 'down'} ml-1`}/> : null}</div>
                     </div>
                 </div>
                 <Table log={audit} />

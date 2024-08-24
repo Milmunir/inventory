@@ -187,8 +187,7 @@ const customModel = new PrismaClient().$extends({
                         entity_id: id,
                         user_id: uid,
                         action: 'delete',
-                        before: ''+before,
-                        timestamp: changed.updated_at
+                        before: ''+before.name,
                     }
                 })
                 return changed
@@ -255,7 +254,7 @@ const customModel = new PrismaClient().$extends({
                 return updated
             },
             async remove({ uid, id }) {
-                const updated = await customModel.categories.update({
+                const updated = await customModel.categories.delete({
                     where: { id }
                 })
                 await customModel.audit.create({
@@ -264,8 +263,7 @@ const customModel = new PrismaClient().$extends({
                         entity_id: id,
                         user_id: uid,
                         action: 'delete',
-                        before: name,
-                        timestamp: updated.created_at
+                        before: updated.name,
                     }
                 })
                 return updated

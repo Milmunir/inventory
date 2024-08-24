@@ -1,9 +1,22 @@
+import { customModel } from "@/app/lib/prisma/customodel"
+import { getactiveuser } from "@/app/lib/session"
 import { PrismaClient } from "@prisma/client"
+import { revalidatePath } from "next/cache"
 
 const prisma = new PrismaClient
 
 export default async function Inventory() {
     const fetched = await prisma.categories.findMany()
+    const uid = await getactiveuser()
+    async function remove(data) {
+        "use server"
+        const id = parseInt(data.get('id'))
+        const del = await customModel.categories.remove({
+            id: id,
+            uid: uid
+        })
+        revalidatePath('/category')
+    }
     return (
         <>
             <div>
@@ -38,9 +51,11 @@ export default async function Inventory() {
                                     </a>
                                 </div>
                                 <div className="table-cell border-b border-slate-100 dark:border-slate-700 px-2 text-slate-500 dark:text-slate-400 align-middle w-12 p-0">
-                                    <button className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" type="button">
-                                        <i className="fas fa-trash text-gray-200"></i>
-                                    </button>
+                                    <form action={remove}>
+                                        <button className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" type="submit" name="id" value={key.id}>
+                                            <i className="fas fa-trash text-gray-200"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
