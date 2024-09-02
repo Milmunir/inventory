@@ -23,7 +23,7 @@ export default async function Itemdetail({ params }) {
         "use server"
         const amount = parseInt(formdata.get('amount'))
         await customModel.items.setQty({
-            uid: uid,
+            uid: uid.id,
             id: id,
             amount: amount,
             before: data.quantity
@@ -34,7 +34,7 @@ export default async function Itemdetail({ params }) {
         "use server"
         const amount = parseInt(formdata.get('amount'))
         await customModel.items.addQty({
-            uid: uid,
+            uid: uid.id,
             id: id,
             amount: amount,
             before: data.quantity
@@ -45,7 +45,7 @@ export default async function Itemdetail({ params }) {
         "use server"
         const amount = parseInt(formdata.get('amount'))
         await customModel.items.subQty({
-            uid: uid,
+            uid: uid.id,
             id: id,
             amount: amount,
             before: data.quantity
@@ -55,7 +55,7 @@ export default async function Itemdetail({ params }) {
     async function remove(formdata) {
         "use server"
         await customModel.items.remove({
-            uid: uid,
+            uid: uid.id,
             id: id,
             before: data
         })

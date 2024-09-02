@@ -1,4 +1,5 @@
 "use server"
+import 'server-only'
 const { PrismaClient } = require('@prisma/client')
 import { compare } from "bcrypt";
 import { deletesession, encrypt, setsessioncookie } from "../lib/session";
@@ -6,6 +7,7 @@ import { deletesession, encrypt, setsessioncookie } from "../lib/session";
 import { redirect } from "next/navigation";
 import { registerValidator } from "../lib/validator";
 import { hash } from "bcrypt";
+import { customModel } from '../lib/prisma/customodel';
 
 const prisma = new PrismaClient()
 
@@ -25,7 +27,7 @@ export async function signup(state, formData) {
         }
     }
     const password = await hash(formData.get('password'), 10)
-    const create = await prisma.user.create({
+    const create = await prisma.user.newUser({
         data: {
             id: id,
             name: formData.get('name'),
@@ -58,6 +60,8 @@ export async function signin(state, formData) {
     const expat = new Date(Date.now() + 24 * 60 * 60 * 1000) // expired 1d later
     const usertoken = await encrypt({
         id: enter.id,
+        name: enter.name,
+        imgprofile: enter.imgprofile,
         expat: expat
     })
     console.log(usertoken);

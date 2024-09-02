@@ -15,7 +15,7 @@ export default async function middleware(req) {
   const session = await decrypt(cookie)
   const response = NextResponse
   if (session) {
-    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
     try {
       response.next().cookies.set('session', session, {
         httpOnly: true,

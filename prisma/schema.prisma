@@ -19,6 +19,7 @@ model user {
   name       String   @db.VarChar(255)
   role       Int      @db.Integer
   password   String   @db.Text
+  imgprofile String?  @db.Text
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   audit      audit[]

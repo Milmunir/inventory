@@ -23,7 +23,7 @@ const customModel = new PrismaClient().$extends({
                         entity_id: created.id,
                         user_id: uid,
                         action: 'create',
-                        after: ''+created.quantity,
+                        after: '' + created.quantity,
                         timestamp: created.created_at
                     }
                 })
@@ -76,8 +76,8 @@ const customModel = new PrismaClient().$extends({
                             user_id: uid,
                             action: 'update',
                             part: 'quantity',
-                            before: ''+before.quantity,
-                            after: ''+quantity,
+                            before: '' + before.quantity,
+                            after: '' + quantity,
                             timestamp: changed.updated_at
                         }
                     })
@@ -91,8 +91,8 @@ const customModel = new PrismaClient().$extends({
                             user_id: uid,
                             action: 'update',
                             part: 'category',
-                            before: ''+before.category_id,
-                            after: ''+category_id,
+                            before: '' + before.category_id,
+                            after: '' + category_id,
                             timestamp: changed.updated_at
                         }
                     })
@@ -128,8 +128,8 @@ const customModel = new PrismaClient().$extends({
                         user_id: uid,
                         action: 'update',
                         part: 'quantity',
-                        before: ''+before,
-                        after: ''+changed.quantity,
+                        before: '' + before,
+                        after: '' + changed.quantity,
                         timestamp: changed.updated_at
                     }
                 })
@@ -149,8 +149,8 @@ const customModel = new PrismaClient().$extends({
                         user_id: uid,
                         action: 'update',
                         part: 'quantity',
-                        before: ''+before,
-                        after: ''+changed.quantity,
+                        before: '' + before,
+                        after: '' + changed.quantity,
                         timestamp: changed.updated_at
                     }
                 })
@@ -170,8 +170,8 @@ const customModel = new PrismaClient().$extends({
                         user_id: uid,
                         action: 'update',
                         part: 'quantity',
-                        before: ''+before,
-                        after: ''+changed.quantity,
+                        before: '' + before,
+                        after: '' + changed.quantity,
                         timestamp: changed.updated_at
                     }
                 })
@@ -187,7 +187,7 @@ const customModel = new PrismaClient().$extends({
                         entity_id: id,
                         user_id: uid,
                         action: 'delete',
-                        before: ''+before.name,
+                        before: '' + before.name,
                     }
                 })
                 return changed
@@ -260,6 +260,85 @@ const customModel = new PrismaClient().$extends({
                 await customModel.audit.create({
                     data: {
                         type: 'category',
+                        entity_id: id,
+                        user_id: uid,
+                        action: 'delete',
+                        before: updated.name,
+                    }
+                })
+                return updated
+            },
+        },
+        user: {
+            async newUser({ uid, id, name, password, role, imgprofile }) {
+                const created = await customModel.user.create({
+                    data: {
+                        id,
+                        name,
+                        password,
+                        role,
+                        imgprofile
+                    }
+                })
+                await customModel.audit.create({
+                    data: {
+                        type: 'user',
+                        entity_id: created.id,
+                        user_id: uid,
+                        action: 'create',
+                        after: name,
+                        timestamp: created.created_at
+                    }
+                })
+                return created
+            },
+            async upUser({ uid, id, name, imgprofile, before }) {
+                const updated = await customModel.user.update({
+                    where: { id },
+                    data: {
+                        name,
+                        imgprofile
+                    }
+                })
+                if (before.name != name) {
+                    console.log('name');
+                    await customModel.audit.create({
+                        data: {
+                            type: 'user',
+                            entity_id: id,
+                            user_id: uid,
+                            action: 'update',
+                            part: 'name',
+                            before: before.name,
+                            after: name,
+                            timestamp: updated.updated_at
+                        }
+                    })
+                }
+                if (before.imgprofile != imgprofile) {
+                    console.log('description');
+                    await customModel.audit.create({
+                        data: {
+                            type: 'user',
+                            entity_id: id,
+                            user_id: uid,
+                            action: 'update',
+                            part: 'imgprofile',
+                            before: before.imgprofile,
+                            after: imgprofile,
+                            timestamp: updated.updated_at
+                        }
+                    })
+                }
+                return updated
+            },
+            async remove({ uid, id }) {
+                const updated = await customModel.user.delete({
+                    where: { id }
+                })
+                await customModel.audit.create({
+                    data: {
+                        type: 'user',
                         entity_id: id,
                         user_id: uid,
                         action: 'delete',

@@ -26,7 +26,7 @@ export default async function additem() {
             try {
                 const uid = await getactiveuser();
                 const create = await customModel.items.newItem({
-                    uid: uid,
+                    uid: uid.id,
                     name: data.get('name'),
                     description: data.get('description'),
                     quantity: qty,

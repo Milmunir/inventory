@@ -7,7 +7,7 @@ export default async function Addcategory() {
     async function additem(data) {
         "use server"
         const create = await customModel.categories.newCat({
-            uid: uid,
+            uid: uid.id,
             name: data.get('name'),
             description: data.get('description')
         })

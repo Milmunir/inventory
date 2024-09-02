@@ -13,7 +13,7 @@ export default async function Inventory() {
         const id = parseInt(data.get('id'))
         const del = await customModel.categories.remove({
             id: id,
-            uid: uid
+            uid: uid.id
         })
         revalidatePath('/category')
     }

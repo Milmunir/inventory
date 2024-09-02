@@ -38,7 +38,7 @@ export async function setsessioncookie(session, expat) {
 export async function getactiveuser() {
     const session = cookies().get('session').value
     const payload = await decrypt(session)
-    return payload.id
+    return payload
 }
 
 export async function updatesessioncookie() {
@@ -48,7 +48,25 @@ export async function updatesessioncookie() {
         console.log('user not found');
         redirect('/login')
     }
-    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
+    try {
+        cookies().set('session', session, {
+            httpOnly: true,
+            secure: true,
+            expires: expires,
+            sameSite: 'lax',
+            path: '/',
+        })
+        console.log('session refresed');
+        return expires
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function updateActiveUserCookie(newpayload) {
+    const session = await encrypt(newpayload)
+    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
     try {
         cookies().set('session', session, {
             httpOnly: true,

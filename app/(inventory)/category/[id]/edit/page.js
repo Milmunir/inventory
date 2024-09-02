@@ -14,7 +14,7 @@ export default async function Editcategory({params}) {
         "use server"
         const create = await customModel.categories.upCat({
             id: id,
-            uid: uid,
+            uid: uid.id,
             name: formdata.get('name'),
             description: formdata.get('description'),
             before: data
