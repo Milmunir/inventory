@@ -276,8 +276,7 @@ const customModel = new PrismaClient().$extends({
                         id,
                         name,
                         password,
-                        role,
-                        imgprofile
+                        role
                     }
                 })
                 await customModel.audit.create({

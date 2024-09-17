@@ -4,7 +4,7 @@ const { PrismaClient } = require('@prisma/client')
 import { compare } from "bcrypt";
 import { deletesession, encrypt, setsessioncookie } from "../lib/session";
 // import { NextResponse } from "next/server";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { registerValidator } from "../lib/validator";
 import { hash } from "bcrypt";
 import { customModel } from '../lib/prisma/customodel';
@@ -27,13 +27,11 @@ export async function signup(state, formData) {
         }
     }
     const password = await hash(formData.get('password'), 10)
-    const create = await prisma.user.newUser({
-        data: {
-            id: id,
-            name: formData.get('name'),
-            password: password,
-            role: 2
-        }
+    const create = await customModel.user.newUser({
+        id: id,
+        name: formData.get('name'),
+        password: password,
+        role: 2
     })
     redirect(`/login`)
 }
@@ -62,7 +60,9 @@ export async function signin(state, formData) {
         id: enter.id,
         name: enter.name,
         imgprofile: enter.imgprofile,
-        expat: expat
+        role: enter.role,
+        expat: expat,
+        verified: enter.verified
     })
     console.log(usertoken);
     await setsessioncookie(usertoken, expat)

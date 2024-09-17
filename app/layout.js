@@ -1,8 +1,3 @@
-// additional root layout
-// actualy this app can work fine without this file,
-// but redirect not work if the redirect target has different root layout
-// it need this root layout
-
 import { Inter } from "next/font/google";
 import "./css/globals.css";
 const inter = Inter({ subsets: ["latin"] });

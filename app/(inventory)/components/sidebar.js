@@ -82,12 +82,14 @@ export default function Sidebar({ profile }) {
                                     Category List
                                 </a>
                             </li>
-                            <li className="items-center">
+                            {profile.role === 0 &&
+                                <li className="items-center">
                                 <a className="text-gray-900 dark:text-gray-100 hover:text-pink-600 text-xs uppercase py-3 font-bold block" href="/user">
                                     <i className="text-center fas fa-user-circle text-blueGray-300 mr-2 text-sm w-6"></i>
                                     User List
                                 </a>
                             </li>
+                            }
                             <li className="items-center">
                                 <a className="text-gray-900 dark:text-gray-100 hover:text-pink-600 text-xs uppercase py-3 font-bold block" href="/report">
                                     <i className="text-center fas fa-bars text-blueGray-300 mr-2 text-sm w-6"></i>

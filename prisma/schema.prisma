@@ -20,6 +20,7 @@ model user {
   role       Int      @db.Integer
   password   String   @db.Text
   imgprofile String?  @db.Text
+  verified   Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   audit      audit[]

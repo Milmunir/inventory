@@ -18,7 +18,6 @@ export default function Filter(data) {
         else {
             list.current = list.current.sort((a, b) => (a[key] > b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0))
         }
-        console.log(list.current);
         settable(<Table list={list.current}/>)
     }
     function filter(catid) {

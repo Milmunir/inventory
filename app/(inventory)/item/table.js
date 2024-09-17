@@ -1,7 +1,6 @@
 export default function Table(data) {
     return (
         <>
-            {console.log(data)}
             {data.list.map((key) => (
                 <a className="table-row-group bg-white dark:bg-slate-800" key={key.id} href={`/item/${key.id}`}>
                     <div className="table-row">
