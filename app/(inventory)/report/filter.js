@@ -78,7 +78,7 @@ export default function Filter(data) {
         <>
             <div className="flex mt-2 justify-between">
                 <div className="ll:flex items-center block">
-                    <div className="flex">
+                    <div className="flex items-center">
                         Filter
                         <select className="ml-2 font-semibold inline-block py-1 px-2  rounded text-gray-600 dark:text-gray-200 bg-gray-200 dark:bg-gray-600" placeholder="type" name="type" onChange={(e) => setfilter('type', e.target.value)}>
                             <option value="">Type</option>

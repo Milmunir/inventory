@@ -15,6 +15,7 @@ export default async function Addcategory() {
     }
     return (
         <>
+            <title>Add Category</title>
             <div className="mb-3 pt-0">
                 <form action={additem}>
                     <label htmlFor="name">Name</label>

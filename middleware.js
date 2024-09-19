@@ -5,11 +5,13 @@ import { cookies } from 'next/headers'
 // 1. Specify public routes and the rest is protected
 const publicRoutes = ['/login', '/register']
 const adminRoutes = ['/user']
+const viewerRoutes = ['/dashboard', '/item', '/report', '/category']
 
 export default async function middleware(req) {
   // 2. Check if the current route is public
   const path = req.nextUrl.pathname
   const isPublicRoute = publicRoutes.includes(path)
+  const isViewerRoute = viewerRoutes.includes(path)
   const isAdminRoute = adminRoutes.includes(path)
   // 3. Decrypt the session from the cookie
   const cookie = cookies().get('session')?.value
@@ -34,8 +36,11 @@ export default async function middleware(req) {
   console.log(isAdminRoute ? 'admin' : 'notadmin');
 
   // 5. When not logged in but trying to access
-  if (!isPublicRoute && session.id==undefined) {
+  if (!isPublicRoute && session?.id==undefined) {
     return response.redirect(new URL('/login', req.nextUrl))
+  }
+  if (!isViewerRoute && session?.verified === false) {
+    return new response('Forrbidden', { status: 403 })
   }
   if (isAdminRoute && session.role !== 0) {
     console.log('admin - ' + session.role);

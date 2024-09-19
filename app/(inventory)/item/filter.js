@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState} from "react";
+import { useRef, useState } from "react";
 import Table from "./table";
 
 export default function Filter(data) {
@@ -9,7 +9,7 @@ export default function Filter(data) {
     //but if i use a component as state, it will update at any changes done
     const list = useRef(data.item)
     const sort = useRef('name')
-    const [table, settable] = useState(<Table list={list.current}/>);
+    const [table, settable] = useState(<Table list={list.current} user={data.user} />);
     function sorting(key) {
         sort.current = key
         if (sort.current === 'category.name') {
@@ -18,7 +18,7 @@ export default function Filter(data) {
         else {
             list.current = list.current.sort((a, b) => (a[key] > b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0))
         }
-        settable(<Table list={list.current}/>)
+        settable(<Table list={list.current} user={data.user} />)
     }
     function filter(catid) {
         let filtered
@@ -44,11 +44,13 @@ export default function Filter(data) {
                         ))}
                     </select>
                 </div>
-                <a href="/item/add">
-                    <button className="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mb-1 ease-linear transition-all duration-150" type="button">
-                        Add
-                    </button>
-                </a>
+                {data.user.verified &&
+                    <a href="/item/add">
+                        <button className="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mb-1 ease-linear transition-all duration-150" type="button">
+                            Add
+                        </button>
+                    </a>
+                }
             </div>
             <div className="table border-collapse table-auto w-full text-sm">
                 <div className="table-header-group">

@@ -23,7 +23,6 @@ model user {
   verified   Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  audit      audit[]
 }
 
 model categories {
@@ -52,7 +51,6 @@ model audit {
   id        Int      @id @default(autoincrement())
   type      String   @db.Text
   entity_id Int?
-  user      user     @relation(fields: [user_id], references: [id])
   user_id   Int
   action    String   @db.VarChar()
   part      String?  @db.Text

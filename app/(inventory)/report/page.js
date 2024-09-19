@@ -16,8 +16,8 @@ export default async function Audit() {
             id: true,
             name: true
         },
-        orderBy:[
-            {id: 'asc'}
+        orderBy: [
+            { id: 'asc' }
         ]
     })
     const categories = await prisma.categories.findMany({
@@ -25,8 +25,8 @@ export default async function Audit() {
             id: true,
             name: true
         },
-        orderBy:[
-            {name: 'asc'}
+        orderBy: [
+            { name: 'asc' }
         ]
     })
     const users = await prisma.user.findMany({
@@ -34,14 +34,15 @@ export default async function Audit() {
             id: true,
             name: true
         },
-        orderBy:[
-            {name: 'asc'}
+        orderBy: [
+            { name: 'asc' }
         ]
     })
-    
+
     return (
         <>
-            <Filter user={users} item={item} log={log} cat={categories}/>
+            <title>Change Report</title>
+            <Filter user={users} item={item} log={log} cat={categories} />
         </>
     )
 }

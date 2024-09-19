@@ -28,11 +28,11 @@ export default async function UserEdit({ params }) {
         "use server"
         const file = formdata.get("image");
         let filename
-        if (file.size===0) {
+        if (file.size === 0) {
             console.log('no image');
             filename = data.imgprofile
         }
-        else{
+        else {
             console.log('has image');
             filename = `${Date.now()}${id}${path.extname(file.name)}`;
             if (!file) {
@@ -76,6 +76,7 @@ export default async function UserEdit({ params }) {
     }
     return (
         <>
+            <title>{data.name}</title>
             <div className="">
                 <div className="flex w-full">
                     <div>

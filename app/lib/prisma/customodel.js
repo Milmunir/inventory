@@ -270,20 +270,21 @@ const customModel = new PrismaClient().$extends({
             },
         },
         user: {
-            async newUser({ uid, id, name, password, role, imgprofile }) {
+            async newUser({ id, name, password, role, imgprofile }) {
                 const created = await customModel.user.create({
                     data: {
                         id,
                         name,
                         password,
-                        role
+                        role,
                     }
                 })
+                console.log(created);
                 await customModel.audit.create({
                     data: {
                         type: 'user',
                         entity_id: created.id,
-                        user_id: uid,
+                        user_id: created.id,
                         action: 'create',
                         after: name,
                         timestamp: created.created_at
@@ -329,6 +330,27 @@ const customModel = new PrismaClient().$extends({
                         }
                     })
                 }
+                return updated
+            },
+            async verifyUser({ uid, id }) {
+                const updated = await customModel.user.update({
+                    where: { id },
+                    data: {
+                        verified: true
+                    }
+                })
+                await customModel.audit.create({
+                    data: {
+                        type: 'user',
+                        entity_id: id,
+                        user_id: uid,
+                        action: 'update',
+                        part: 'verify',
+                        before: false,
+                        after: true,
+                        timestamp: updated.updated_at
+                    }
+                })
                 return updated
             },
             async remove({ uid, id }) {

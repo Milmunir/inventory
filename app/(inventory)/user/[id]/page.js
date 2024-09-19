@@ -21,6 +21,7 @@ export default async function UserDetail({ params }) {
     }
     return (
         <>
+            <title>{data.name}</title>
             <div className="">
                 <div className="flex w-full justify-between">
                     <div>

@@ -15,18 +15,18 @@ export default async function Edititem({ params }) {
     if (prevdata == null) {
         notFound()
     }
-    
+
     async function edititem(data) {
         "use server"
         let qty = parseInt(data.get('quantity'))
         let category = parseInt(data.get('category_id'))
         const file = data.get("image");
         let filename
-        if (file.size===0) {
+        if (file.size === 0) {
             console.log('no image');
             filename = prevdata.imgpath
         }
-        else{
+        else {
             console.log('has image');
             filename = `${Date.now()}_${uuidv4()}${path.extname(file.name)}`;
             if (!file) {
@@ -62,6 +62,7 @@ export default async function Edititem({ params }) {
     const categories = await customModel.categories.findMany()
     return (
         <>
+            <title>{`Edit ${prevdata.name}`}</title>
             <div className="mb-3 pt-0 grid grid-cols-[1fr_25%] gap-4">
                 <form action={edititem} id="item-form">
                     <label htmlFor="name">Name</label>

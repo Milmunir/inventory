@@ -38,11 +38,8 @@ export default function Navbar({ data }) {
                                         <div className={`py-2box-border bg-white text-base text-left rounded shadow-lg overflow-hidden`}>
                                             <p className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-600">{data.name}</p>
                                             <hr />
-                                            <a className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-600">Action</a>
-                                            <a href="/auth" className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-600">Action</a>
-                                            <hr />
                                             <form action={logout}>
-                                                <button className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-gray-600" type="submit">Log Out</button>
+                                                <button className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-left text-gray-600" type="submit">Log Out</button>
                                             </form>
                                         </div>
                                     </div>

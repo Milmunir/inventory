@@ -1,4 +1,5 @@
 "use client"
+import { logout } from "@/app/auth/user";
 import Image from "next/image";
 import { useState } from "react";
 import { usePopper } from "react-popper";
@@ -24,7 +25,7 @@ export default function Sidebar({ profile }) {
                     </a>
                     <ul className="md:hidden items-center flex flex-wrap list-none">
                         <li className="inline-block relative">
-                            <a className="text-blueGray-500 block" ref={setReferenceElement} onClick={()=>setOpen(!open)}>
+                            <a className="text-blueGray-500 block" ref={setReferenceElement} onClick={() => setOpen(!open)}>
                                 <div className="items-center flex">
                                     <span className="w-12 h-12 text-sm text-gray-900 dark:text-gray-100 bg-blueGray-200 inline-flex items-center justify-center rounded-full">
                                         <Image
@@ -33,7 +34,7 @@ export default function Sidebar({ profile }) {
                                             src={imgurl}
                                             height={300}
                                             width={300}
-                                            onError={()=>setimgurl('/img/noimage.jpg')}
+                                            onError={() => setimgurl('/img/noimage.jpg')}
                                         />
                                     </span>
                                 </div>
@@ -42,10 +43,9 @@ export default function Sidebar({ profile }) {
                                 <div className={`py-2 absolute box-border bg-gray-100 text-base text-left rounded shadow-lg overflow-hidden`} style={styles.popper} id="user-responsive-dropdown" ref={setPopperElement} {...attributes.popper}>
                                     <p className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-600">{profile.name}</p>
                                     <hr />
-                                    <a href="#pablo" className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-600">Another action</a >
-                                    <a href="#pablo" className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-600">Something else here</a>
-                                    <hr />
-                                    <a href="#pablo" className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-600">Seprated link</a>
+                                    <form action={logout}>
+                                        <button className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-gray-600" type="submit">Log Out</button>
+                                    </form>
                                 </div>
                             )}
                         </li>
@@ -84,11 +84,11 @@ export default function Sidebar({ profile }) {
                             </li>
                             {profile.role === 0 &&
                                 <li className="items-center">
-                                <a className="text-gray-900 dark:text-gray-100 hover:text-pink-600 text-xs uppercase py-3 font-bold block" href="/user">
-                                    <i className="text-center fas fa-user-circle text-blueGray-300 mr-2 text-sm w-6"></i>
-                                    User List
-                                </a>
-                            </li>
+                                    <a className="text-gray-900 dark:text-gray-100 hover:text-pink-600 text-xs uppercase py-3 font-bold block" href="/user">
+                                        <i className="text-center fas fa-user-circle text-blueGray-300 mr-2 text-sm w-6"></i>
+                                        User List
+                                    </a>
+                                </li>
                             }
                             <li className="items-center">
                                 <a className="text-gray-900 dark:text-gray-100 hover:text-pink-600 text-xs uppercase py-3 font-bold block" href="/report">

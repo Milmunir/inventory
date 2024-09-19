@@ -1,9 +1,22 @@
 import { customModel } from "@/app/lib/prisma/customodel";
 import { getactiveuser } from "@/app/lib/session";
+import Head from "next/head";
 import { redirect } from "next/navigation"
 
-export default async function Editcategory({params}) {
-    const id = parseInt(params.id)    
+// export async function generateMetadata({ params }) {
+//     const id = parseInt(params.id)
+//     const data = await customModel.categories.findUnique({
+//         where: {
+//             id: id
+//         }
+//     })
+//     return {
+//       title: data.name,
+//     }
+//   }
+
+export default async function Editcategory({ params }) {
+    const id = parseInt(params.id)
     const data = await customModel.categories.findUnique({
         where: {
             id: id
@@ -23,6 +36,7 @@ export default async function Editcategory({params}) {
     }
     return (
         <>
+            <title>{data.name}</title>
             <div className="mb-3 pt-0">
                 <form action={additem}>
                     <label htmlFor="name">Name</label>

@@ -2,12 +2,13 @@
 import 'server-only'
 const { PrismaClient } = require('@prisma/client')
 import { compare } from "bcrypt";
-import { deletesession, encrypt, setsessioncookie } from "../lib/session";
+import { deletesession, encrypt, getactiveuser, setsessioncookie } from "../lib/session";
 // import { NextResponse } from "next/server";
 import { notFound, redirect } from "next/navigation";
 import { registerValidator } from "../lib/validator";
 import { hash } from "bcrypt";
 import { customModel } from '../lib/prisma/customodel';
+import { revalidatePath } from 'next/cache';
 
 const prisma = new PrismaClient()
 
@@ -75,4 +76,26 @@ export async function logout(req) {
     console.log(req);
     await deletesession()
     redirect('/login')
+}
+
+export async function autoLogin(id) {
+    const enter = await prisma.user.findUnique({
+        where: {
+            id: id
+        }
+    })
+    // create session
+    const expat = new Date(Date.now() + 24 * 60 * 60 * 1000) // expired 1d later
+    const usertoken = await encrypt({
+        id: enter.id,
+        name: enter.name,
+        imgprofile: enter.imgprofile,
+        role: enter.role,
+        expat: expat,
+        verified: enter.verified
+    })
+    console.log(usertoken);
+    await setsessioncookie(usertoken, expat)
+    // NextResponse.redirect(new URL('/dashboard', req.nextUrl))
+    redirect('/dashboard')
 }

@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const registerValidator = z.object({
     id: z
-        .number({message: 'Insert valid employee number'})
+        .number({message: 'Insert valid number'})
         .positive(),
     name: z
         .string()
