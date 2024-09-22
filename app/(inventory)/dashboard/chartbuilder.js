@@ -45,7 +45,7 @@ export default function ChartBuilder(params) {
             <div className="w-full aspect-square">
                 <h3 className='text-center'>{params.title}</h3>
                 <div className='w-full h-full'>
-                    <canvas id={params.canvasid} ></canvas>
+                    <canvas id={params.canvasid} width={100+'%'} height={100+'%'}></canvas>
                 </div>
             </div>
             
