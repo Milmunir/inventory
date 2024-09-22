@@ -7,7 +7,7 @@ import { usePopper } from "react-popper";
 
 export default function Navbar({ data }) {
     const [open, setOpen] = useState(false);
-    const [imgurl, setimgurl] = useState(`/img/user/${data.imgprofile}`);
+    const [imgurl, setimgurl] = useState(data.imgprofile === null ? '/img/noimage.jpg' : `/img/user/${data.imgprofile}`);
     const [referenceElement, setReferenceElement] = useState(null);
     const [popperElement, setPopperElement] = useState(null);
     const { styles, attributes } = usePopper(referenceElement, popperElement, { placement: 'bottom-end', strategy: 'absolute' });

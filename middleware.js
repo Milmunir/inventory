@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 // 1. Specify public routes and the rest is protected
 const publicRoutes = ['/login', '/register']
 const adminRoutes = ['/user']
-const viewerRoutes = ['/dashboard', '/item', '/report', '/category']
+const viewerRoutes = ['/dashboard', '/item', '/report', '/category', '/profile']
 
 export default async function middleware(req) {
   // 2. Check if the current route is public
@@ -27,13 +27,11 @@ export default async function middleware(req) {
         sameSite: 'lax',
         path: '/',
       })
-      console.log('refreshed');
     } catch (error) {
       console.log(error);
     }
   }
-  console.log(session?.id !== 0);
-  console.log(isAdminRoute ? 'admin' : 'notadmin');
+  console.log(session?.id);
 
   // 5. When not logged in but trying to access
   if (!isPublicRoute && session?.id==undefined) {

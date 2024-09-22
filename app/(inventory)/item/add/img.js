@@ -34,6 +34,7 @@ export default function Img(formid) {
                 name="image"
                 accept="image/*"
                 onChange={handleImageChange}
+                required={true}
             />
         </>
     )

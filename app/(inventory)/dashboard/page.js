@@ -1,7 +1,7 @@
 import Piecard from "./piecard";
-import Graph from "./graph";
+// import Graph from "./graph";
 import { PrismaClient } from "@prisma/client";
-import { errorLoadData } from '../components/errorLoadData'
+import ChartBuilder from "./chartbuilder";
 
 const prisma = new PrismaClient
 
@@ -101,7 +101,8 @@ export default async function Dashboard() {
                         <Piecard data={{ count: emptystock._count }} icon={'fas fa-exclamation'} title='EMPTY STOCK' desc="Item with 0 stock" />
                     </div>
                     <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 mt-4">
-                        <Graph data={example} title='Placeholder' x='year' datatype='count' graphtitle='PLACEHOLDER' />
+                        {/* <Graph data={example} title='Placeholder' x='year' datatype='count' graphtitle='PLACEHOLDER' /> */}
+                        <ChartBuilder canvasid='chart' chartype='bar' data={example} title='Placeholder' x='year' datatype='count' graphtitle='PLACEHOLDER'/>
                         <div>
                             <h3 className="text-center">NEWEST ITEMS</h3>
                             <div className="table border-collapse table-auto w-full text-sm">

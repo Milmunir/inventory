@@ -9,15 +9,13 @@ export default function Error({ error, reset }) {
 
     return (
         < div >
-            {console.log(error)}
+            {/* {console.log(error.digest)} */}
             <div className='flex w-screen h-screen items-center justify-center'>
-                <div>
-                    <div className='flex h-min w-min'>
-                        <h2 className='mx-4 text-2xl'>Ops!</h2>
-                        <span className='border-l-[1px] border-white px-4 text-nowrap flex items-center'>
-                            <p>{error.message}</p>
-                        </span>
-                    </div>
+                <div className='grid max-w-full grid-cols-[min-content_1fr] items-center'>
+                    <h2 className='mx-4 text-2xl'>Ops!</h2>
+                    <span className='border-l-[1px] border-white px-4 text-center'>
+                        <p>{error.message}</p>
+                    </span>
                 </div>
             </div>
         </div >

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { usePopper } from "react-popper";
 
 export default function Sidebar({ profile }) {
-    const [imgurl, setimgurl] = useState(`/img/user/${profile.imgprofile}`);
+    const [imgurl, setimgurl] = useState(profile.imgprofile === null ? '/img/noimage.jpg' : `/img/user/${profile.imgprofile}`);
     const [isopened, setisopened] = useState(false);
     function openmenu(param) {
         setisopened(param)
