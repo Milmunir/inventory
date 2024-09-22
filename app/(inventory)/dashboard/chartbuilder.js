@@ -2,7 +2,6 @@
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { buildChart } from './chart';
-import Script from 'next/script';
 
 export default function ChartBuilder(params) {
     useEffect(() => {
