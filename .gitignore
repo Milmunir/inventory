@@ -41,3 +41,5 @@ next-env.d.ts
 public/uploads/*
 public/img/item/*
 public/img/user/*
+
+tmp/*

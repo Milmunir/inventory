@@ -1,8 +1,4 @@
 import { notFound, redirect } from "next/navigation"
-import { NextResponse } from "next/server";
-import { v4 as uuidv4 } from 'uuid';
-import path from "path";
-import { writeFile } from "fs/promises";
 import Img from "./img"
 import { customModel } from "@/app/lib/prisma/customodel";
 import { getactiveuser } from "@/app/lib/session";
@@ -20,27 +16,15 @@ export default async function Edititem({ params }) {
         "use server"
         let qty = parseInt(data.get('quantity'))
         let category = parseInt(data.get('category_id'))
-        const file = data.get("image");
+        const file = data.get("base64img");
         let filename
-        if (file.size === 0) {
+        if (file === 'null') {
             console.log('no image');
-            filename = prevdata.imgpath
+            filename = undefined
         }
         else {
             console.log('has image');
-            filename = `${Date.now()}_${uuidv4()}${path.extname(file.name)}`;
-            if (!file) {
-                return NextResponse.json({ error: "No files received." }, { status: 400 });
-            }
-            const buffer = Buffer.from(await file.arrayBuffer());
-            try {
-                await writeFile(
-                    path.join(process.cwd(), "public/uploads/" + filename),
-                    buffer
-                );
-            } catch (error) {
-                console.log(error);
-            }
+            filename = file
         }
         try {
             const uid = await getactiveuser();
@@ -76,7 +60,7 @@ export default async function Edititem({ params }) {
                         ))}
                     </select>
                     <label htmlFor="description">Description</label>
-                    <textarea id="description" name="description" placeholder="description" className="px-3 py-3 placeholder-gray-600 text-gray-600 bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full my-4" defaultValue={prevdata.quantity} />
+                    <textarea id="description" name="description" placeholder="description" className="px-3 py-3 placeholder-gray-600 text-gray-600 bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full my-4" defaultValue={prevdata.description} />
                     <div className="flex w-full justify-end">
                         <button className="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-base px-8 py-3 rounded shadow-md hover:shadow-lg outline-none focus:outline-none my-4 ease-linear transition-all duration-150" type="submit">UPDATE ITEM</button>
                     </div>

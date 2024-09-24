@@ -97,21 +97,6 @@ const customModel = new PrismaClient().$extends({
                         }
                     })
                 }
-                if (before.imgpath != imgpath) {
-                    console.log('img');
-                    await customModel.audit.create({
-                        data: {
-                            type: 'item',
-                            entity_id: id,
-                            user_id: uid,
-                            action: 'update',
-                            part: 'imgpath',
-                            before: before.imgpath,
-                            after: imgpath,
-                            timestamp: changed.updated_at
-                        }
-                    })
-                }
                 return changed
             },
             async addQty({ uid, id, amount, before }) {
@@ -315,21 +300,6 @@ const customModel = new PrismaClient().$extends({
                         }
                     })
                 }
-                if (before.imgprofile != imgprofile) {
-                    console.log('description');
-                    await customModel.audit.create({
-                        data: {
-                            type: 'user',
-                            entity_id: id,
-                            user_id: uid,
-                            action: 'update',
-                            part: 'imgprofile',
-                            before: before.imgprofile,
-                            after: imgprofile,
-                            timestamp: updated.updated_at
-                        }
-                    })
-                }
                 return updated
             },
             async verifyUser({ uid, id }) {
@@ -346,8 +316,8 @@ const customModel = new PrismaClient().$extends({
                         user_id: uid,
                         action: 'update',
                         part: 'verify',
-                        before: false,
-                        after: true,
+                        before: 'false',
+                        after: 'true',
                         timestamp: updated.updated_at
                     }
                 })

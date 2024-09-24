@@ -4,18 +4,21 @@ import { useState } from "react";
 
 export default function Img(data) {
     const [image, setImage] = useState(null);
+    const [b64, setb64] = useState('null');
     const [preview, setPreview] = useState(data.imagebefore);
 
     const handleImageChange = (event) => {
+        const reader = new FileReader()
         const file = event.target.files[0];
         setImage(file);
-        console.log(file);
-
+        reader.onloadend = () => {
+            setb64(reader.result)
+        };
+        reader.readAsDataURL(file)
         // Create a URL for the selected image to preview it
         const previewUrl = URL.createObjectURL(file);
         setPreview(previewUrl);
     };
-    console.log(data);
     
     return (
         <>
@@ -23,7 +26,7 @@ export default function Img(data) {
                 <div className="relative flex w-full aspect-square">
                     <Image
                         className="object-contain"
-                        src={preview}
+                        src={decodeURIComponent(preview)}
                         alt="item image"
                         fill={true}
                         priority
@@ -32,13 +35,12 @@ export default function Img(data) {
             )}
             <input
                 className="mt-4"
-                form={data.formId}
                 type="file"
                 id="image"
-                name="image"
                 accept="image/*"
                 onChange={handleImageChange}
             />
+            <input form={data.formId} type="text" name="base64img" hidden={true} defaultValue={b64} />
         </>
     )
 }

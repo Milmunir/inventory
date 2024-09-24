@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation"
+import { permanentRedirect, redirect } from "next/navigation"
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from 'uuid';
 import path from "path";
@@ -7,22 +7,28 @@ import Img from "./img"
 import { customModel } from "@/app/lib/prisma/customodel";
 import { getactiveuser } from "@/app/lib/session";
 
+// const reader = new FileReader()
+
 export default async function additem() {
     async function additem(data) {
         "use server"
+        console.log(data);
         let qty = parseInt(data.get('quantity'))
         let category = parseInt(data.get('category_id'))
-        const file = data.get("image");
-        if (!file) {
-            return NextResponse.json({ error: "No files received." }, { status: 400 });
-        }
-        const buffer = Buffer.from(await file.arrayBuffer());
-        const filename = `${Date.now()}_${uuidv4()}${path.extname(file.name)}`;
-        try {
-            await writeFile(
-                path.join(process.cwd(), "public/uploads/" + filename),
-                buffer
-            );
+        // const file = data.get("image64");
+        const file64 = data.get("base64img")
+        
+        // if (!file||!file64) {
+        //     return NextResponse.json({ error: "No files received." }, { status: 400 });
+        // }
+        // console.log(file64);
+        // const buffer = Buffer.from(await file.arrayBuffer());
+        // const filename = `${Date.now()}_${uuidv4()}${path.extname(file.name)}`;
+        // try {
+        //     await writeFile(
+        //         path.join(process.cwd(), "public/uploads/" + filename),
+        //         buffer
+        //     );
             try {
                 const uid = await getactiveuser();
                 const create = await customModel.items.newItem({
@@ -31,16 +37,16 @@ export default async function additem() {
                     description: data.get('description'),
                     quantity: qty,
                     category_id: category,
-                    imgpath: filename
+                    imgpath: file64
                 })
-                console.log(create);
+                console.log('created');
             } catch (error) {
                 console.log(error);
             }
-        } catch (error) {
-            console.log(error);
-        }
-        redirect('/item')
+        // } catch (error) {
+        //     console.log(error);
+        // }
+        permanentRedirect('/item')
     }
     const categories = await customModel.categories.findMany()
     return (

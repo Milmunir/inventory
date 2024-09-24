@@ -21,6 +21,7 @@ export default async function UserDetail({ params }) {
     }
     return (
         <>
+        
             <title>{data.name}</title>
             <div className="">
                 <div className="flex w-full justify-between">
@@ -43,7 +44,7 @@ export default async function UserDetail({ params }) {
                         <div className="relative flex w-full aspect-square">
                             <Image
                                 className="object-contain"
-                                src={data.imgprofile == null ? '/img/noimage.jpg' : `/img/user/${data.imgprofile}`}
+                                src={data.imgprofile == null || data.imgprofile == 'null'? '/img/noimage.jpg' : decodeURIComponent(data.imgprofile)}
                                 alt="item image"
                                 fill={true}
                             />

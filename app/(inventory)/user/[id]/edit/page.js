@@ -26,31 +26,15 @@ export default async function UserEdit({ params }) {
     }
     async function edituser(formdata) {
         "use server"
-        const file = formdata.get("image");
+        const file = formdata.get("base64img");
         let filename
-        if (file.size === 0) {
+        if (file === 'null') {
             console.log('no image');
-            filename = data.imgprofile
+            filename = undefined
         }
         else {
             console.log('has image');
-            filename = `${Date.now()}${id}${path.extname(file.name)}`;
-            if (!file) {
-                return NextResponse.json({ error: "No files received." }, { status: 400 });
-            }
-            const buffer = Buffer.from(await file.arrayBuffer());
-            try {
-                await unlink("public/img/user/" + data.imgprofile, (err) => {
-                    if (err) throw err;
-                    console.log('deleted');
-                });
-                await writeFile(
-                    path.join(process.cwd(), "public/img/user/" + filename),
-                    buffer
-                );
-            } catch (error) {
-                console.log(error);
-            }
+            filename = file
         }
         try {
             const uid = await getactiveuser();
@@ -85,7 +69,7 @@ export default async function UserEdit({ params }) {
                 </div>
                 <div className="grid grid-cols-[25%_1fr] gap-4 w-full mt-4">
                     <div className="">
-                        <Img imagebefore={data.imgprofile == null ? '/img/noimage.jpg' : `/img/user/${data.imgprofile}`} formId={"user-form"} />
+                        <Img imagebefore={data.imgprofile == null ? '/img/noimage.jpg' : data.imgprofile} formId={"user-form"} />
                     </div>
                     <div className="break-words grid grid-rows-[min-content_1fr]">
                         <form id="user-form" action={edituser}>

@@ -87,7 +87,7 @@ export default async function Itemdetail({ params }) {
                         <div className="relative flex w-full h-full">
                             <Image
                                 className="object-contain"
-                                src={`/uploads/${data.imgpath}`}
+                                src={decodeURIComponent(data.imgpath)}
                                 alt="item image"
                                 fill={true}
                             />
